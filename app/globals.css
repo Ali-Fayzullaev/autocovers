@@ -5,18 +5,19 @@
 :root {
   --bg: #ffffff;
   --fg: #1c1c1c;
+  --gold: #d4af37;
 }
 .dark {
   --bg: #0b0f16;
   --fg: #ededed;
 }
+
 html,
 body {
   background: var(--bg);
   color: var(--fg);
 }
 
-/* мелкие утилиты */
 .container-px {
   @apply px-4 sm:px-6 lg:px-8;
 }
@@ -32,12 +33,34 @@ body {
 .muted {
   @apply text-gray-600 dark:text-gray-300;
 }
-.accent {
-  color: theme("colors.brand.gold");
+
+.text-gold {
+  color: var(--gold);
 }
+.border-gold {
+  border-color: var(--gold);
+}
+.bg-gold {
+  background-color: var(--gold);
+}
+.shadow-gold {
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+}
+
 .btn-gold {
-  @apply bg-brand-gold text-black hover:opacity-90 transition;
+  @apply inline-flex items-center justify-center font-semibold rounded-2xl transition;
+  background: var(--gold);
+  color: #000;
+}
+.btn-gold:hover {
+  opacity: 0.9;
 }
 .btn-outline-gold {
-  @apply border border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-black;
+  @apply inline-flex items-center justify-center font-semibold rounded-2xl border;
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.btn-outline-gold:hover {
+  background: var(--gold);
+  color: #000;
 }

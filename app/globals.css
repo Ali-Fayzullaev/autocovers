@@ -64,3 +64,8 @@ body {
   background: var(--gold);
   color: #000;
 }
+
+
+.bb {
+  border: 2px solid red;
+}

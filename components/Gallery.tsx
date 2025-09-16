@@ -6,10 +6,11 @@ import { kz } from "@/lib/translations/kz";
 
 // Положите ваши фото работ в public/gallery/* (имена ниже можно заменить)
 const images = [
-  "/gallery/byd-destroyer05.jpg",
-  "/gallery/lada-priora.jpg",
-  "/gallery/hyundai-santafe.jpg",
-  "/gallery/kia-k5.jpg",
+  "/work/work1.png",
+  "/work/work2.png",
+  "/work/work3.png",
+  "/work/work4.png",
+  "/work/work5.png",
 ];
 
 export function Gallery() {

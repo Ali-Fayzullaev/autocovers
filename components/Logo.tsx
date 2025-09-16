@@ -4,7 +4,7 @@ export function Logo({ className = "h-9 w-auto" }: { className?: string }) {
   return (
     <div className="flex items-center gap-3">
       <Image
-        src="/logo.png"
+        src="/logo.jpg"
         alt="Autocovers.kz"
         width={38}
         height={38}

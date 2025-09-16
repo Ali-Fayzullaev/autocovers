@@ -1,52 +1,53 @@
-"use client"
-
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { ru } from "@/lib/translations/ru"
-import { kz } from "@/lib/translations/kz"
-import { useLanguage } from "@/lib/LanguageContext"
+"use client";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { ru } from "@/lib/translations/ru";
+import { kz } from "@/lib/translations/kz";
+import { useLanguage } from "@/lib/LanguageContext";
+import { WHATSAPP_LINK } from "@/lib/config";
 
 export default function Hero() {
-  const { lang, setLang } = useLanguage()
-  const t = lang === "ru" ? ru : kz
+  const { lang } = useLanguage();
+  const t = lang === "ru" ? ru : kz;
 
   return (
-    <section className="flex flex-col items-center justify-center text-center py-20">
+    <section className="section pt-16 text-center">
       <motion.h1
-        initial={{ opacity: 0, y: -30 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-        className="text-4xl font-bold"
+        transition={{ duration: 0.6 }}
+        className="h1"
       >
         {t.hero.title}
       </motion.h1>
-
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="mt-4 text-lg text-gray-600 dark:text-gray-300"
+        transition={{ delay: 0.15 }}
+        className="mt-4 text-lg muted"
       >
         {t.hero.subtitle}
       </motion.p>
-
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="mt-6"
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.25 }}
+        className="mt-1 text-sm text-brand-gold"
       >
-        <Button asChild>
-          <a href="https://wa.me/77785228800" target="_blank">
-            {t.hero.button}
+        {t.hero.note}
+      </motion.p>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.35 }}
+        className="mt-8"
+      >
+        <Button asChild className="btn-gold px-6 py-6 text-base rounded-2xl">
+          <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer">
+            {t.hero.cta}
           </a>
         </Button>
       </motion.div>
-
-      <div className="mt-4 flex gap-2">
-        <Button variant="outline" onClick={() => setLang("ru")}>RU</Button>
-        <Button variant="outline" onClick={() => setLang("kz")}>KZ</Button>
-      </div>
     </section>
-  )
+  );
 }

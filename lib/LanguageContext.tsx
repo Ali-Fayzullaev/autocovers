@@ -1,42 +1,42 @@
-"use client"
+"use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react"
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 
-type Lang = "ru" | "kz"
+type Lang = "ru" | "kz";
 
-type LangContextType = {
-  lang: Lang
-  setLang: (lang: Lang) => void
-}
-
-const LanguageContext = createContext<LangContextType | undefined>(undefined)
+type LangCtx = { lang: Lang; setLang: (l: Lang) => void };
+const LanguageContext = createContext<LangCtx | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("ru")
-  const [mounted, setMounted] = useState(false)
+  const [lang, setLang] = useState<Lang>("ru");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // пробуем взять язык из localStorage
-    const saved = localStorage.getItem("lang") as Lang | null
-    if (saved) setLang(saved)
-    setMounted(true)
-  }, [])
-
+    const saved = (typeof window !== "undefined" &&
+      localStorage.getItem("lang")) as Lang | null;
+    if (saved) setLang(saved);
+    setMounted(true);
+  }, []);
   useEffect(() => {
-    if (mounted) localStorage.setItem("lang", lang)
-  }, [lang, mounted])
+    if (mounted) localStorage.setItem("lang", lang);
+  }, [lang, mounted]);
 
-  if (!mounted) return null
-
+  if (!mounted) return null;
   return (
     <LanguageContext.Provider value={{ lang, setLang }}>
       {children}
     </LanguageContext.Provider>
-  )
+  );
 }
 
-export function useLanguage() {
-  const ctx = useContext(LanguageContext)
-  if (!ctx) throw new Error("useLanguage must be used inside LanguageProvider")
-  return ctx
-}
+export const useLanguage = () => {
+  const ctx = useContext(LanguageContext);
+  if (!ctx) throw new Error("useLanguage must be used within LanguageProvider");
+  return ctx;
+};

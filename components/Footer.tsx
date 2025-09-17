@@ -4,7 +4,7 @@ import { ru } from "@/lib/translations/ru";
 import { kz } from "@/lib/translations/kz";
 import { useLanguage } from "@/lib/LanguageContext";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Phone, MapPin, MessageCircle } from "lucide-react";
 import { WHATSAPP_LINK, PHONES, ADDRESS_MSW } from "@/lib/config";
 
 export function Footer() {
@@ -131,7 +131,7 @@ export function Footer() {
                   href="#contacts"
                   className="block text-sm text-gray-300 hover:text-[var(--gold)] transition-colors"
                 >
-                  {t.nav.reviews}
+                  {t.nav.contacts}
                 </a>
               </nav>
             </motion.div>

@@ -145,24 +145,23 @@ export function Reviews() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (!api) return;
-
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap());
-
-    const handleSelect = () => setCurrent(api.selectedScrollSnap());
-
-    // подписка
-    api.on("select", handleSelect);
-
-    // корректный cleanup (гарантированно () => void)
+    if (!api) return
+  
+    setCount(api.scrollSnapList().length)
+    setCurrent(api.selectedScrollSnap())
+  
+    const handleSelect = (inst?: CarouselApi) => {
+      const ref = inst ?? api
+      if (!ref) return
+      setCurrent(ref.selectedScrollSnap())
+    }
+  
+    api.on("select", handleSelect)
     return () => {
-      // у некоторых типов Embla off требует тот же колбэк
-      try {
-        api.off("select", handleSelect as any);
-      } catch {}
-    };
-  }, [api]);
+      api.off("select", handleSelect)
+    }
+  }, [api])
+  
 
   return (
     <section id="reviews" className="section">

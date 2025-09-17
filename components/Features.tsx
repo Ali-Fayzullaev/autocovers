@@ -23,8 +23,7 @@ const itemVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5,
-      ease: "easeOut"
+      duration: 0.5
     }
   }
 };
@@ -53,7 +52,8 @@ export function Features() {
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          {t.features.subtitle || "Премиальное качество и исключительный сервис для вашего автомобиля"}
+          {/* Убрали subtitle, так как его нет в переводе */}
+          Премиальное качество и исключительный сервис для вашего автомобиля
         </motion.p>
         
         <motion.div 
@@ -85,8 +85,9 @@ export function Features() {
                 
                 <div className="relative z-10 h-1 w-10 bg-gradient-to-r from-[var(--gold)] to-transparent mb-4 rounded-full"></div>
                 
+                {/* Убрали descriptions, так как их нет в переводе */}
                 <p className="relative z-10 text-sm muted mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  {t.features.items?.[i] || "Подробное описание преимущества"}
+                  Детальное описание нашего премиум сервиса
                 </p>
                 
                 {/* Эффект при наведении */}

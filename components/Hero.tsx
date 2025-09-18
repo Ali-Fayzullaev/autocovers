@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { ru } from "@/lib/translations/ru"
-import { kz } from "@/lib/translations/kz"
-import { useLanguage } from "@/lib/LanguageContext"
-import { WHATSAPP_LINK } from "@/lib/config"
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { ru } from "@/lib/translations/ru";
+import { kz } from "@/lib/translations/kz";
+import { useLanguage } from "@/lib/LanguageContext";
+import { WHATSAPP_LINK } from "@/lib/config";
 
 export default function Hero() {
-  const { lang } = useLanguage()
-  const t = lang === "ru" ? ru : kz
+  const { lang } = useLanguage();
+  const t = lang === "ru" ? ru : kz;
 
   return (
     <section className="relative isolate overflow-hidden">
@@ -70,14 +70,16 @@ export default function Hero() {
           transition={{ delay: 0.22 }}
           className="mt-5 flex flex-wrap items-center justify-center gap-2 text-sm"
         >
-          {["Авточехлы", "3D/5D полики", "Подушки Майбах", "Сертификаты"].map((label) => (
-            <li
-              key={label}
-              className="rounded-full border border-white/15 px-3 py-1.5 bg-white/70 dark:bg-white/5 backdrop-blur-sm"
-            >
-              {label}
-            </li>
-          ))}
+          {["Авточехлы", "3D/5D полики", "Подушки Майбах", "Сертификаты"].map(
+            (label) => (
+              <li
+                key={label}
+                className="rounded-full border border-white/15 px-3 py-1.5 bg-white/70 dark:bg-white/5 backdrop-blur-sm"
+              >
+                {label}
+              </li>
+            )
+          )}
         </motion.ul>
 
         <motion.p
@@ -109,5 +111,5 @@ export default function Hero() {
         className="absolute left-1/2 bottom-0 -translate-x-1/2 w-[92%] max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-[var(--gold)]/50 to-transparent"
       />
     </section>
-  )
+  );
 }

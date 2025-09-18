@@ -3,6 +3,7 @@ import { Providers } from "./providers";
 import { LanguageProvider } from "@/lib/LanguageContext";
 import { Navbar } from "@/components/Navbar";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { MobileCallBar } from "@/components/MobileCallBar";
 
 export const metadata = {
   title: "Autocovers.kz — Авточехлы | Полики | Астана",
@@ -23,6 +24,7 @@ export default function RootLayout({
             <Navbar />
             {children}
             <WhatsAppFloat />
+            <MobileCallBar />
           </LanguageProvider>
         </Providers>
       </body>

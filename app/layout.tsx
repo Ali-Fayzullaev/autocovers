@@ -69,6 +69,22 @@ export default function RootLayout({
             });
           `}
         </Script>
+
+        <Script id="gtag-conversion-fn" strategy="afterInteractive">
+          {` window.sendGtagConversion = function() {
+              if (typeof gtag === 'function') {
+                gtag('event', 'conversion', { 'send_to': 'AW-17463892692/1sfzCOawhJ4bENS1t4dB' });
+              } else {
+                // если gtag еще не готов — отложим на короткое время
+                setTimeout(function(){
+                  if (typeof gtag === 'function') {
+                    gtag('event', 'conversion', { 'send_to': 'AW-17463892692/1sfzCOawhJ4bENS1t4dB' });
+                  }
+                }, 500);
+              }
+            };
+          `}
+        </Script>
       </head>
       <body>
         {/* GTM (noscript) — строго сразу после <body> */}

@@ -71,19 +71,35 @@ export default function RootLayout({
         </Script>
 
         <Script id="gtag-conversion-fn" strategy="afterInteractive">
-          {` window.sendGtagConversion = function() {
+          {`
+          window.sendGtagConversion = function() {
+            try {
+              console.log('[gtag] sendGtagConversion called');
+
               if (typeof gtag === 'function') {
                 gtag('event', 'conversion', { 'send_to': 'AW-17463892692/1sfzCOawhJ4bENS1t4dB' });
+                console.log('[gtag] gtag() called for conversion');
               } else {
-                // если gtag еще не готов — отложим на короткое время
+                console.warn('[gtag] gtag is not defined yet, retrying in 500ms');
                 setTimeout(function(){
                   if (typeof gtag === 'function') {
                     gtag('event', 'conversion', { 'send_to': 'AW-17463892692/1sfzCOawhJ4bENS1t4dB' });
+                    console.log('[gtag] gtag() called for conversion (retry)');
+                  } else {
+                    console.warn('[gtag] still not available — sending image fallback');
+                    // fallback: image pixel to googleadservices (may vary by region)
+                    var img = new Image();
+                    img.src = 'https://www.googleadservices.com/pagead/conversion/17463892692/?label=1sfzCOawhJ4bENS1t4dB&guid=ON&script=0';
+                    img.onload = function(){ console.log('[gtag] image fallback loaded'); };
+                    img.onerror = function(){ console.warn('[gtag] image fallback failed'); };
                   }
                 }, 500);
               }
-            };
-          `}
+            } catch (err) {
+              console.error('[gtag] sendGtagConversion error:', err);
+            }
+          };
+        `}
         </Script>
       </head>
       <body>

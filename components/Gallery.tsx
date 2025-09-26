@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { useEffect, useState } from "react"
-import { useLanguage } from "@/lib/LanguageContext"
-import { ru } from "@/lib/translations/ru"
-import { kz } from "@/lib/translations/kz"
-import Autoplay from "embla-carousel-autoplay"
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useLanguage } from "@/lib/LanguageContext";
+import { ru } from "@/lib/translations/ru";
+import { kz } from "@/lib/translations/kz";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
-import type { CarouselApi } from "@/components/ui/carousel"
+} from "@/components/ui/carousel";
+import type { CarouselApi } from "@/components/ui/carousel";
 
 // Файлы картинок положи в public/work/*
 const IMAGES = [
@@ -22,26 +22,26 @@ const IMAGES = [
   "/work/work3.png",
   "/work/work4.png",
   "/work/work5.png",
-]
+];
 
 export function Gallery() {
-  const { lang } = useLanguage()
-  const t = lang === "ru" ? ru : kz
+  const { lang } = useLanguage();
+  const t = lang === "ru" ? ru : kz;
 
-  const [api, setApi] = useState<CarouselApi>()
-  const [current, setCurrent] = useState(0)
-  const [count, setCount] = useState(0)
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (!api) return
-    setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap())
-    const onSelect = () => setCurrent(api.selectedScrollSnap())
-    api.on("select", onSelect)
+    if (!api) return;
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap());
+    const onSelect = () => setCurrent(api.selectedScrollSnap());
+    api.on("select", onSelect);
     return () => {
-      api.off("select", onSelect)
-    }
-  }, [api])
+      api.off("select", onSelect);
+    };
+  }, [api]);
 
   return (
     <section id="works" className="section">
@@ -52,7 +52,11 @@ export function Gallery() {
         setApi={setApi}
         opts={{ loop: true, align: "start" }}
         plugins={[
-          Autoplay({ delay: 3500, stopOnInteraction: true, stopOnMouseEnter: true }),
+          Autoplay({
+            delay: 3500,
+            stopOnInteraction: true,
+            stopOnMouseEnter: true,
+          }),
         ]}
         className="mx-auto w-full max-w-5xl"
       >
@@ -62,6 +66,7 @@ export function Gallery() {
               <CarouselItem key={i}>
                 <div className="relative aspect-[16/9] w-full">
                   <Image
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     src={src}
                     alt={`work-${i + 1}`}
                     fill
@@ -73,9 +78,9 @@ export function Gallery() {
             ))}
           </CarouselContent>
 
-        {/* стрелки */}
-        <CarouselPrevious className="left-3 border-white/20 bg-white/60 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20" />
-        <CarouselNext className="right-3 border-white/20 bg-white/60 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20" />
+          {/* стрелки */}
+          <CarouselPrevious className="left-3 border-white/20 bg-white/60 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20" />
+          <CarouselNext className="right-3 border-white/20 bg-white/60 dark:bg-white/10 hover:bg-white/80 dark:hover:bg-white/20" />
         </div>
 
         {/* точки */}
@@ -111,11 +116,17 @@ export function Gallery() {
               ].join(" ")}
               aria-label={`Открыть слайд ${i + 1}`}
             >
-              <Image src={src} alt={`thumb-${i + 1}`} fill className="object-cover" />
+              <Image
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                src={src}
+                alt={`thumb-${i + 1}`}
+                fill
+                className="object-cover"
+              />
             </button>
           ))}
         </div>
       </div>
     </section>
-  )
+  );
 }

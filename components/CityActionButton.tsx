@@ -37,7 +37,6 @@ export function CityActionButton({ type, label, className }: CityActionButtonPro
   const [selectedCity, setSelectedCity] = useState<"astana" | "almaty">("astana");
   const [isOpen, setIsOpen] = useState(false);
   const { lang } = useLanguage();
-  const t = lang === "ru" ? ru : kz;
 
   const cities = Object.entries(CITY_DATA).map(([key, data]) => ({
     id: key as keyof typeof CITY_DATA,

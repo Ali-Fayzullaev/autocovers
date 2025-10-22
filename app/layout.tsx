@@ -2,15 +2,16 @@
 import "./globals.css";
 import { Providers } from "./providers";
 import { LanguageProvider } from "@/lib/LanguageContext";
+import { CityProvider } from "@/lib/CityContext";
 import { Navbar } from "@/components/Navbar";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { MobileCallBar } from "@/components/MobileCallBar";
 import Script from "next/script";
 
 export const metadata = {
-  title: "Autocovers.kz — Авточехлы | Полики | Астана",
+  title: "Autocovers.kz — Авточехлы | Полики | Астана и Алматы",
   description:
-    "Индивидуальный пошив авточехлов и аксессуаров в Астане. Рассрочка Kaspi Red. Подарочные сертификаты.",
+    "Индивидуальный пошив авточехлов и аксессуаров в Астане и Алматы. Рассрочка Kaspi Red. Подарочные сертификаты.",
 };
 
 export default function RootLayout({
@@ -126,10 +127,12 @@ export default function RootLayout({
 
         <Providers>
           <LanguageProvider>
-            <Navbar />
-            {children}
-            <WhatsAppFloat />
-            <MobileCallBar />
+            <CityProvider>
+              <Navbar />
+              {children}
+              <WhatsAppFloat />
+              <MobileCallBar />
+            </CityProvider>
           </LanguageProvider>
         </Providers>
       </body>

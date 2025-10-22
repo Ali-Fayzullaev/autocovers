@@ -7,20 +7,39 @@ import { kz } from "@/lib/translations/kz"
 import {
   ADDRESS_MSW,
   ADDRESS_INSTALL,
+  ADDRESS_ALMATY,
   HOURS,
-  PHONES,
+  PHONES_ASTANA,
+  PHONES_ALMATY,
   WHATSAPP_LINK,
   MAP_EMBED_GOOGLE,
+  MAP_EMBED_GOOGLE_ALMATY,
   MAP_URL_GOOGLE,
+  MAP_URL_GOOGLE_ALMATY,
   MAP_URL_2GIS,
+  MAP_URL_2GIS_ALMATY,
 } from "@/lib/config"
 import { Button } from "@/components/ui/button"
-import { useMemo } from "react"
+import { useMemo, useState, useEffect } from "react"
+import { useCity } from "@/lib/CityContext"
 import { motion } from "framer-motion"
 
 export function Contact() {
   const { lang } = useLanguage()
   const t = lang === "ru" ? ru : kz
+  const { selectedCity: globalSelectedCity, setSelectedCity: setGlobalSelectedCity } = useCity()
+  const [selectedCity, setSelectedCity] = useState<"astana" | "almaty">(globalSelectedCity)
+
+  // Синхронизируем локальное состояние с глобальным
+  useEffect(() => {
+    setSelectedCity(globalSelectedCity)
+  }, [globalSelectedCity])
+
+  // Обновляем глобальное состояние при локальном изменении
+  const handleCityChange = (city: "astana" | "almaty") => {
+    setSelectedCity(city)
+    setGlobalSelectedCity(city)
+  }
 
   const L = useMemo(
     () =>
@@ -34,6 +53,9 @@ export function Contact() {
             openInGoogle: "Открыть в Google Maps",
             openIn2GIS: "Открыть в 2GIS",
             writeWhatsApp: "Написать в WhatsApp",
+            astana: t.contacts?.astana ?? "Астана",
+            almaty: t.contacts?.almaty ?? "Алматы",
+            selectCity: t.contacts?.selectCity ?? "Выберите город:",
           }
         : {
             title: t.contacts?.title ?? "Байланыс",
@@ -44,9 +66,34 @@ export function Contact() {
             openInGoogle: "Google Maps ашу",
             openIn2GIS: "2GIS ашу",
             writeWhatsApp: "WhatsApp-қа жазу",
+            astana: t.contacts?.astana ?? "Астана",
+            almaty: t.contacts?.almaty ?? "Алматы", 
+            selectCity: t.contacts?.selectCity ?? "Қаланы таңдаңыз:",
           },
     [lang, t]
   )
+
+  // Данные в зависимости от выбранного города
+  const cityData = useMemo(() => {
+    if (selectedCity === "almaty") {
+      return {
+        address: ADDRESS_ALMATY,
+        phones: PHONES_ALMATY,
+        mapEmbed: MAP_EMBED_GOOGLE_ALMATY,
+        mapGoogle: MAP_URL_GOOGLE_ALMATY,
+        map2Gis: MAP_URL_2GIS_ALMATY,
+      }
+    } else {
+      return {
+        address: ADDRESS_MSW,
+        installAddress: ADDRESS_INSTALL,
+        phones: PHONES_ASTANA,
+        mapEmbed: MAP_EMBED_GOOGLE,
+        mapGoogle: MAP_URL_GOOGLE,
+        map2Gis: MAP_URL_2GIS,
+      }
+    }
+  }, [selectedCity])
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -54,13 +101,13 @@ export function Contact() {
     name: "Autocovers.kz",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Астана",
-      streetAddress: "Mega Silk Way (паркинг, бутик 18)",
+      addressLocality: selectedCity === "astana" ? "Астана" : "Алматы",
+      streetAddress: cityData.address,
       addressCountry: "KZ",
     },
-    telephone: PHONES.map((p) => p.tel),
+    telephone: cityData.phones.map((p) => p.tel),
     openingHours: "Mo-Su 10:00-20:00",
-    url: "https://wa.me/77785228800",
+    url: selectedCity === "astana" ? "https://wa.me/77785228800" : "https://wa.me/77067088225",
   }
 
   const cardVariants = {
@@ -92,6 +139,38 @@ export function Contact() {
         {L.title}
       </motion.h2>
 
+      {/* Переключатель городов */}
+      <motion.div 
+        className="flex justify-center mb-8"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        viewport={{ once: true }}
+      >
+        <div className="inline-flex rounded-xl bg-white dark:bg-slate-800 p-1 border border-gray-200 dark:border-slate-700">
+          <button
+            onClick={() => handleCityChange("astana")}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+              selectedCity === "astana"
+                ? "bg-[var(--gold)] text-white shadow-md"
+                : "text-[var(--fg)] hover:bg-gray-100 dark:hover:bg-slate-700"
+            }`}
+          >
+            {L.astana}
+          </button>
+          <button
+            onClick={() => handleCityChange("almaty")}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+              selectedCity === "almaty"
+                ? "bg-[var(--gold)] text-white shadow-md"
+                : "text-[var(--fg)] hover:bg-gray-100 dark:hover:bg-slate-700"
+            }`}
+          >
+            {L.almaty}
+          </button>
+        </div>
+      </motion.div>
+
       <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
         {/* Левая колонка — карточки с адресом/часами/телефонами */}
         <div className="space-y-6">
@@ -108,12 +187,14 @@ export function Contact() {
               </div>
               <div className="flex-1">
                 <h3 className="font-bold text-lg text-[var(--fg)] mb-2">{L.addressTitle}</h3>
-                <p className="text-[var(--fg)] font-medium">{ADDRESS_MSW}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{ADDRESS_INSTALL}</p>
+                <p className="text-[var(--fg)] font-medium">{cityData.address}</p>
+                {cityData.installAddress && (
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{cityData.installAddress}</p>
+                )}
 
                 <div className="mt-4 flex flex-wrap gap-3">
                   <a
-                    href={MAP_URL_GOOGLE}
+                    href={cityData.mapGoogle}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 dark:bg-slate-700 text-sm font-medium text-[var(--fg)] hover:bg-[var(--gold)]/10 hover:text-[var(--gold)] transition-all duration-300"
@@ -122,7 +203,7 @@ export function Contact() {
                     {L.openInGoogle}
                   </a>
                   <a
-                    href={MAP_URL_2GIS}
+                    href={cityData.map2Gis}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 dark:bg-slate-700 text-sm font-medium text-[var(--fg)] hover:bg-[var(--gold)]/10 hover:text-[var(--gold)] transition-all duration-300"
@@ -169,7 +250,7 @@ export function Contact() {
               <div className="flex-1">
                 <h3 className="font-bold text-lg text-[var(--fg)] mb-3">{L.callTitle}</h3>
                 <ul className="space-y-2">
-                  {PHONES.map((p) => (
+                  {cityData.phones.map((p) => (
                     <li key={p.tel}>
                       <a
                         href={`tel:${p.tel}`}
@@ -182,16 +263,18 @@ export function Contact() {
                   ))}
                 </ul>
 
+                
+              </div>
+              
+            </div>
                 <div className="mt-6">
                   <Button asChild className="w-full bg-gradient-to-r from-[var(--gold)] to-amber-500 hover:from-amber-600 hover:to-amber-600 text-white font-semibold py-3 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 transition-all duration-300">
-                    <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer">
+                    <a href={selectedCity === "astana" ? "https://wa.me/77785228800" : "https://wa.me/77067088225"} target="_blank" rel="noreferrer">
                       <MessageCircle className="mr-2 h-5 w-5" />
                       {L.writeWhatsApp}
                     </a>
                   </Button>
                 </div>
-              </div>
-            </div>
           </motion.div>
         </div>
 
@@ -206,15 +289,15 @@ export function Contact() {
           <div className="relative aspect-[4/3] sm:aspect-[16/10]">
             <div className="absolute inset-0 bg-gradient-to-br from-[var(--gold)]/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none"></div>
             <iframe
-              src={MAP_EMBED_GOOGLE}
+              src={cityData.mapEmbed}
               className="absolute inset-0 h-full w-full"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Mega Silk Way — карта"
+              title={`${selectedCity === "astana" ? "Астана" : "Алматы"} — карта`}
             />
             <div className="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
               <p className="text-sm font-medium text-center text-[var(--fg)]">
-                ТД «Mega Silk Way» — паркинг, бутик 18
+                {cityData.address}
               </p>
             </div>
           </div>

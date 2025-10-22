@@ -4,7 +4,7 @@ import { kz } from "@/lib/translations/kz";
 import { useLanguage } from "@/lib/LanguageContext";
 import { motion } from "framer-motion";
 import { Car, Layers, Shield, Sun, Pill, Gift } from "lucide-react";
-import { WHATSAPP_LINK } from "@/lib/config";
+import { CityActionButton } from "@/components/CityActionButton";
 
 const catalogIcons = [Car, Layers, Shield, Sun, Pill, Gift];
 
@@ -96,14 +96,13 @@ export function Catalog() {
                 <div className="absolute inset-0 bg-gradient-to-br from-[var(--gold)]/3 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 {/* Кнопка "Подробнее" */}
-                <a href={WHATSAPP_LINK}>
                 <div className="relative z-10 mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <button className="text-sm font-medium text-[var(--gold)] hover:underline">
-                    {t.catalog.also}
-                  </button>
+                  <CityActionButton
+                    type="whatsapp"
+                    label={t.catalog.also}
+                    className="text-sm font-medium text-[var(--gold)] hover:underline bg-transparent p-0 shadow-none"
+                  />
                 </div>
-
-                </a>
               </motion.div>
             );
           })}

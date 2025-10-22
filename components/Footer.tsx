@@ -3,9 +3,10 @@
 import { ru } from "@/lib/translations/ru";
 import { kz } from "@/lib/translations/kz";
 import { useLanguage } from "@/lib/LanguageContext";
+import { CityActionButton } from "@/components/CityActionButton";
 import { motion } from "framer-motion";
 import { Phone, MapPin, MessageCircle } from "lucide-react";
-import { WHATSAPP_LINK, PHONES, ADDRESS_MSW } from "@/lib/config";
+import { WHATSAPP_LINK, PHONES_ASTANA, PHONES_ALMATY, ADDRESS_MSW, ADDRESS_ALMATY } from "@/lib/config";
 
 export function Footer() {
   const { lang } = useLanguage();
@@ -76,24 +77,48 @@ export function Footer() {
               <h3 className="font-semibold text-lg mb-5 text-[var(--gold)]">
                 Контакты
               </h3>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <Phone className="h-4 w-4 text-[var(--gold)]" />
-                  <div className="flex flex-col">
-                    {PHONES.slice(0, 2).map((phone) => (
-                      <a
-                        key={phone.tel}
-                        href={`tel:${phone.tel}`}
-                        className="text-sm text-gray-300 hover:text-[var(--gold)] transition-colors"
-                      >
-                        {phone.label}
-                      </a>
-                    ))}
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <MapPin className="h-4 w-4 text-[var(--gold)] mt-0.5" />
+                  <div className="flex flex-col gap-2">
+                    <div>
+                      <p className="text-xs text-[var(--gold)] font-medium mb-1">Астана</p>
+                      <p className="text-sm text-gray-300">{ADDRESS_MSW}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-[var(--gold)] font-medium mb-1">Алматы</p>
+                      <p className="text-sm text-gray-300">{ADDRESS_ALMATY}</p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="h-4 w-4 text-[var(--gold)]" />
-                  <span className="text-sm text-gray-300">{ADDRESS_MSW}</span>
+                <div className="flex items-start gap-3">
+                  <Phone className="h-4 w-4 text-[var(--gold)] mt-0.5" />
+                  <div className="flex flex-col gap-2">
+                    <div>
+                      <p className="text-xs text-[var(--gold)] font-medium mb-1">Астана</p>
+                      {PHONES_ASTANA.slice(0, 2).map((phone) => (
+                        <a
+                          key={phone.tel}
+                          href={`tel:${phone.tel}`}
+                          className="block text-sm text-gray-300 hover:text-[var(--gold)] transition-colors"
+                        >
+                          {phone.label}
+                        </a>
+                      ))}
+                    </div>
+                    <div>
+                      <p className="text-xs text-[var(--gold)] font-medium mb-1">Алматы</p>
+                      {PHONES_ALMATY.map((phone) => (
+                        <a
+                          key={phone.tel}
+                          href={`tel:${phone.tel}`}
+                          className="block text-sm text-gray-300 hover:text-[var(--gold)] transition-colors"
+                        >
+                          {phone.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -146,15 +171,11 @@ export function Footer() {
               <h3 className="font-semibold text-lg mb-5 text-[var(--gold)]">
                 Свяжитесь с нами
               </h3>
-              <a
-                href={WHATSAPP_LINK}
-                target="_blank"
-                rel="noreferrer"
+              <CityActionButton
+                type="whatsapp"
+                label="Написать в WhatsApp"
                 className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-[var(--gold)] to-amber-500 hover:from-amber-600 hover:to-amber-600 text-white font-medium text-sm transition-all duration-300 shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40"
-              >
-                <MessageCircle className="h-4 w-4" />
-                Написать в WhatsApp
-              </a>
+              />
 
               <div className="mt-6 p-3 bg-slate-800/50 rounded-xl border border-[var(--gold)]/20">
                 <p className="text-xs text-gray-400 text-center">

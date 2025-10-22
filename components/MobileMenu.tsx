@@ -4,6 +4,7 @@ import { MessageCircle, Menu } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { LangToggle } from "@/components/LangToggle"
 import { ThemeToggle } from "@/components/ThemeToggle"
+import { CityActionButton } from "@/components/CityActionButton"
 import { useLanguage } from "@/lib/LanguageContext"
 import { ru } from "@/lib/translations/ru"
 import { kz } from "@/lib/translations/kz"
@@ -53,18 +54,6 @@ export function MobileMenu() {
           <LangToggle />
           <ThemeToggle />
         </div>
-
-        <SheetClose asChild>
-          <a
-            href={WHATSAPP_LINK}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-4 btn-gold w-full justify-center py-3 rounded-xl shadow-gold inline-flex items-center gap-2"
-          >
-            <MessageCircle className="h-5 w-5" /> WhatsApp
-          </a>
-        </SheetClose>
-
         <div className="mt-auto text-sm muted">
           <p>{HOURS}</p>
           <p>MEGA Silk Way, паркинг, бутик 18</p>

@@ -33,7 +33,7 @@ export function Features() {
   const t = lang === "ru" ? ru : kz;
   
   return (
-    <section id="services" className="section py-16 md:py-24 bg-[var(--bg)]">
+    <section id="services" className="section py-16 md:py-24 bg-[var(--bg)] z-0">
       <div className="container mx-auto px-4 max-w-6xl">
         <motion.h2 
           className="h2 mb-4 text-center text-[var(--fg)]"

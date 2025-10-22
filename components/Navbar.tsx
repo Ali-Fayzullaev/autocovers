@@ -5,6 +5,7 @@ import { Logo } from "@/components/Logo"
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { LangToggle } from "@/components/LangToggle"
 import { MobileMenu } from "@/components/MobileMenu"
+import { CityActionButton } from "@/components/CityActionButton"
 import { useLanguage } from "@/lib/LanguageContext"
 import { ru } from "@/lib/translations/ru"
 import { kz } from "@/lib/translations/kz"
@@ -72,17 +73,16 @@ export function Navbar() {
             </div>
             
             {/* Кнопка WhatsApp */}
-            <motion.a
-              href="https://wa.me/77785228800"
-              target="_blank"
-              rel="noreferrer"
-              className="hidden sm:flex items-center gap-2 bg-gradient-to-r from-[var(--gold)] to-amber-500 hover:from-amber-600 hover:to-amber-600 text-white font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 transition-all duration-300"
+            <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              className="hidden sm:block"
             >
-              <MessageCircle className="h-4 w-4" />
-              WhatsApp
-            </motion.a>
+              <CityActionButton
+                type="whatsapp"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-[var(--gold)] to-amber-500 hover:from-amber-600 hover:to-amber-600 text-white font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 transition-all duration-300"
+              />
+            </motion.div>
           </motion.div>
           
           {/* Мобильное меню */}

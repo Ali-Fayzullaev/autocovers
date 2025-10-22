@@ -2,10 +2,11 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { CityActionButton } from "@/components/CityActionButton";
 import { ru } from "@/lib/translations/ru";
 import { kz } from "@/lib/translations/kz";
 import { useLanguage } from "@/lib/LanguageContext";
-import { WHATSAPP_LINK } from "@/lib/config";
+import { KaspiRedLogo } from "@/components/KaspiRedLogo";
 
 export default function Hero() {
   const { lang } = useLanguage();
@@ -82,14 +83,17 @@ export default function Hero() {
           )}
         </motion.ul>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.28 }}
-          className="mt-4 text-sm text-[var(--gold)]"
+          className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3"
         >
-          {t.hero.note}
-        </motion.p>
+          <p className="text-sm sm:text-base text-[var(--gold)] text-center sm:text-left">
+            {t.hero.note}
+          </p>
+          <KaspiRedLogo className="inline-block" />
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
@@ -97,11 +101,11 @@ export default function Hero() {
           transition={{ delay: 0.35 }}
           className="mt-8"
         >
-          <Button asChild className="btn-gold px-6 py-6 text-base rounded-2xl">
-            <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer">
-              {t.hero.cta}
-            </a>
-          </Button>
+          <CityActionButton
+            type="whatsapp"
+            label={t.hero.cta}
+            className="btn-gold px-6 py-6 text-base rounded-2xl"
+          />
         </motion.div>
       </div>
 

@@ -76,12 +76,11 @@ export function CityActionButton({ type, label, className }: CityActionButtonPro
   };
 
   return (
-    <div className="relative w-auto">
+    <div className="relative w-full max-w-md mx-auto">
       <button
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          console.log('Button clicked - opening modal');
           setIsOpen(true);
         }}
         onTouchStart={(e) => {
@@ -91,37 +90,34 @@ export function CityActionButton({ type, label, className }: CityActionButtonPro
         onTouchEnd={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          console.log('Touch ended - opening modal');
           setIsOpen(true);
         }}
         className={`
           ${className || "btn-gold"}
           flex items-center justify-center gap-2 w-full
-          min-h-[34px] /* Минимальная высота для мобильных */
-          active:scale-[0.98] /* Фидбек при нажатии */
+          min-h-[64px]
+          active:scale-[0.98]
           transition-all duration-150
-          select-none /* Убираем выделение текста */
-          touch-manipulation /* Оптимизация для тач-устройств */
+          select-none
+          touch-manipulation
           relative
           overflow-hidden
         `}
         style={{
-          WebkitTapHighlightColor: 'transparent' /* Убираем синий highlight на iOS */
+          WebkitTapHighlightColor: 'transparent'
         }}
       >
-        {/* Основной контент */}
         <div className="flex items-center justify-center gap-2 w-full px-2">
           {getActionIcon()}
           <span className="flex-1 text-center font-medium">{getActionLabel()}</span>
-         
+          <ChevronDown className="h-3 w-3 flex-shrink-0" />
         </div>
         
-        {/* Overlay для лучшего touch target */}
         <div className="absolute inset-0 bg-transparent" />
       </button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-md bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 rounded-2xl mx-4">
+        <DialogContent className="bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 rounded-2xl w-[calc(100vw-2rem)] max-w-md">
           <DialogHeader className="text-center">
             <DialogTitle className="text-xl font-semibold text-gray-900 dark:text-gray-100">
               {lang === "ru" ? "Выберите город" : "Қаланы таңдаңыз"}
@@ -141,7 +137,7 @@ export function CityActionButton({ type, label, className }: CityActionButtonPro
                 onClick={() => handleAction(city.id)}
                 className={`
                   w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-center gap-4 group
-                  min-h-[70px] /* Минимальная высота для тач-устройств */
+                  min-h-[70px]
                   active:scale-[0.98]
                   ${selectedCity === city.id 
                     ? "border-amber-500 bg-amber-50 dark:bg-amber-500/10" 

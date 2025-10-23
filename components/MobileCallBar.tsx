@@ -12,14 +12,14 @@ export function MobileCallBar() {
       bg-white dark:bg-gray-900 backdrop-blur-md
     "
     >
-      <div className="container-px mx-auto max-w-5xl py-3 flex items-center gap-3">
+      <div className="container-px mx-auto max-w-5xl py-3 flex items-center gap-3 justify-between">
         <CityActionButton
           type="call"
           className="flex-1 btn-outline-gold py-3.5 rounded-xl text-center justify-center font-medium"
         />
         <CityActionButton
           type="whatsapp"
-          className="flex-1 btn-gold py-3.5 rounded-xl text-center justify-center font-medium"
+          className="flex-1 btn-gold py-3.5 rounded-xl text-center justify-center font-medium "
         />
       </div>
     </div>

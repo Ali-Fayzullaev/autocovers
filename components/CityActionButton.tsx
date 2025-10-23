@@ -76,24 +76,52 @@ export function CityActionButton({ type, label, className }: CityActionButtonPro
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-auto">
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('Button clicked - opening modal');
+          setIsOpen(true);
+        }}
+        onTouchStart={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+        onTouchEnd={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('Touch ended - opening modal');
+          setIsOpen(true);
+        }}
         className={`
           ${className || "btn-gold"}
-          flex items-center gap-2 relative group
+          flex items-center justify-center gap-2 w-full
+          min-h-[34px] /* Минимальная высота для мобильных */
+          active:scale-[0.98] /* Фидбек при нажатии */
+          transition-all duration-150
+          select-none /* Убираем выделение текста */
+          touch-manipulation /* Оптимизация для тач-устройств */
+          relative
+          overflow-hidden
         `}
+        style={{
+          WebkitTapHighlightColor: 'transparent' /* Убираем синий highlight на iOS */
+        }}
       >
-        {getActionIcon()}
-        <span>{getActionLabel()}</span>
-        <div className="flex items-center gap-1 ml-1">
-          <span className="text-xs opacity-75">({currentCityName})</span>
-          <ChevronDown className="h-3 w-3 transition-transform duration-200" />
+        {/* Основной контент */}
+        <div className="flex items-center justify-center gap-2 w-full px-2">
+          {getActionIcon()}
+          <span className="flex-1 text-center font-medium">{getActionLabel()}</span>
+         
         </div>
+        
+        {/* Overlay для лучшего touch target */}
+        <div className="absolute inset-0 bg-transparent" />
       </button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-md bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 rounded-2xl">
+        <DialogContent className="sm:max-w-md bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 rounded-2xl mx-4">
           <DialogHeader className="text-center">
             <DialogTitle className="text-xl font-semibold text-gray-900 dark:text-gray-100">
               {lang === "ru" ? "Выберите город" : "Қаланы таңдаңыз"}
@@ -112,33 +140,38 @@ export function CityActionButton({ type, label, className }: CityActionButtonPro
                 key={city.id}
                 onClick={() => handleAction(city.id)}
                 className={`
-                  w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-center gap-4 group hover:shadow-md
+                  w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-center gap-4 group
+                  min-h-[70px] /* Минимальная высота для тач-устройств */
+                  active:scale-[0.98]
                   ${selectedCity === city.id 
-                    ? "border-amber-500 bg-amber-50 dark:bg-amber-500/10 shadow-amber-100 dark:shadow-amber-500/20" 
+                    ? "border-amber-500 bg-amber-50 dark:bg-amber-500/10" 
                     : "border-gray-200 dark:border-slate-600 hover:border-amber-300 hover:bg-gray-50 dark:hover:bg-slate-700"
                   }
                 `}
+                style={{
+                  WebkitTapHighlightColor: 'transparent'
+                }}
               >
-                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
+                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                   selectedCity === city.id 
                     ? "border-amber-500 bg-amber-500" 
-                    : "border-gray-300 dark:border-gray-600 group-hover:border-amber-400"
+                    : "border-gray-300 dark:border-gray-600"
                 }`}>
                   {selectedCity === city.id && (
-                    <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                    <div className="w-2 h-2 bg-white rounded-full" />
                   )}
                 </div>
                 
-                <div className="flex-1">
-                  <div className="font-semibold text-gray-900 dark:text-gray-100 text-base mb-1">
+                <div className="flex-1 min-w-0">
+                  <div className="font-semibold text-gray-900 dark:text-gray-100 text-base truncate">
                     {city.name}
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-                    {CITY_DATA[city.id].phone.replace("+7", "+7 ").replace(/(\d{3})(\d{3})(\d{2})(\d{2})/, "$1 $2 $3 $4")}
+                  <div className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                    {CITY_DATA[city.id].phone}
                   </div>
                 </div>
                 
-                <div className="text-2xl opacity-60 group-hover:opacity-80 transition-opacity">
+                <div className="text-2xl opacity-60 group-hover:opacity-80 transition-opacity flex-shrink-0">
                   {type === "call" ? "📞" : "💬"}
                 </div>
               </button>
@@ -147,7 +180,10 @@ export function CityActionButton({ type, label, className }: CityActionButtonPro
           
           <button
             onClick={() => setIsOpen(false)}
-            className="w-full mt-4 py-3 px-4 text-gray-500 dark:text-gray-400 text-sm font-medium hover:text-gray-700 dark:hover:text-gray-200 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700"
+            className="w-full mt-6 py-4 text-gray-500 dark:text-gray-400 text-base font-medium hover:text-gray-700 dark:hover:text-gray-200 transition-colors rounded-lg border border-gray-200 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 active:scale-[0.98] min-h-[52px]"
+            style={{
+              WebkitTapHighlightColor: 'transparent'
+            }}
           >
             {lang === "ru" ? "Отмена" : "Болдырмау"}
           </button>

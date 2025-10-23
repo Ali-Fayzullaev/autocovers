@@ -80,7 +80,7 @@ export function Navbar() {
             >
               <CityActionButton
                 type="whatsapp"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-[var(--gold)] to-amber-500 hover:from-amber-600 hover:to-amber-600 text-white font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 transition-all duration-300"
+                className="inline-flex items-center  gap-2 bg-gradient-to-r from-[var(--gold)] to-amber-500 hover:from-amber-600 hover:to-amber-600 text-white font-semibold px-4 py-3 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 transition-all duration-300"
               />
             </motion.div>
           </motion.div>

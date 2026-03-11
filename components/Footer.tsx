@@ -6,7 +6,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { CityActionButton } from "@/components/CityActionButton";
 import { motion } from "framer-motion";
 import { Phone, MapPin, MessageCircle } from "lucide-react";
-import { WHATSAPP_LINK, PHONES_ASTANA, PHONES_ALMATY, ADDRESS_MSW, ADDRESS_ALMATY } from "@/lib/config";
+import { WHATSAPP_LINK, PHONES_ASTANA, ADDRESS_MSW } from "@/lib/config";
 
 export function Footer() {
   const { lang } = useLanguage();
@@ -85,10 +85,6 @@ export function Footer() {
                       <p className="text-xs text-[var(--gold)] font-medium mb-1">Астана</p>
                       <p className="text-sm text-gray-300">{ADDRESS_MSW}</p>
                     </div>
-                    <div>
-                      <p className="text-xs text-[var(--gold)] font-medium mb-1">Алматы</p>
-                      <p className="text-sm text-gray-300">{ADDRESS_ALMATY}</p>
-                    </div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -106,18 +102,7 @@ export function Footer() {
                         </a>
                       ))}
                     </div>
-                    <div>
-                      <p className="text-xs text-[var(--gold)] font-medium mb-1">Алматы</p>
-                      {PHONES_ALMATY.map((phone) => (
-                        <a
-                          key={phone.tel}
-                          href={`tel:${phone.tel}`}
-                          className="block text-sm text-gray-300 hover:text-[var(--gold)] transition-colors"
-                        >
-                          {phone.label}
-                        </a>
-                      ))}
-                    </div>
+                    {/* Алматы номера удалены */}
                   </div>
                 </div>
               </div>

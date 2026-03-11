@@ -16,14 +16,6 @@ const CITIES = [
     whatsapp: "https://wa.me/77785228800",
     color: "from-blue-500 to-blue-600",
     hoverColor: "hover:from-blue-600 hover:to-blue-700",
-  },
-  {
-    id: "almaty", 
-    name: { ru: "Алматы", kz: "Алматы" },
-    phone: "+77067088225",
-    whatsapp: "https://wa.me/77067088225",
-    color: "from-green-500 to-green-600",
-    hoverColor: "hover:from-green-600 hover:to-green-700", 
   }
 ] as const;
 
@@ -35,6 +27,11 @@ export default function Hero() {
     console.log(`Opening WhatsApp for ${cityName}`);
     window.open(whatsappUrl, "_blank");
   };
+
+  // since there's only one city entry, pick it once to simplify JSX
+  const city = CITIES[0];
+  const cityName = city.name[lang as keyof typeof city.name];
+  const cityWhatsapp = city.whatsapp;
 
   return (
     <section className="relative isolate overflow-hidden bg-gradient-to-b from-[#FFF6D8] via-white to-white dark:from-[#0B0F16] dark:via-[#0B0F16] dark:to-[#0B0F16]">
@@ -101,36 +98,33 @@ export default function Hero() {
           transition={{ delay: 0.35 }}
           className="mt-8 flex flex-col sm:flex-row gap-2 justify-center items-stretch max-w-sm mx-auto"
         >
-          {CITIES.map((city) => (
-            <button
-              key={city.id}
-              onClick={() => handleWhatsApp(city.whatsapp, city.name[lang as keyof typeof city.name])}
-              className={`
-                flex-1
-                bg-gradient-to-r ${city.color} ${city.hoverColor}
-                text-white
-                px-3 py-2 text-xs font-medium rounded-lg
-                flex items-center justify-center gap-1
-                transition-all duration-200
-                active:scale-95
-                shadow-md hover:shadow-lg
-                border-0
-                min-h-[45px]
-                relative
-                group
-                sm:px-4 sm:py-3 sm:text-sm sm:rounded-xl
-              `}
-              style={{ 
-                WebkitTapHighlightColor: 'transparent',
-                touchAction: 'manipulation'
-              }}
-            >
-              <MessageCircle className="h-3 w-3 sm:h-4 sm:w-4" />
-              <span className="font-semibold">WhatsApp</span>
-              <span className="opacity-90">•</span>
-              <span className="opacity-90">{city.name[lang as keyof typeof city.name]}</span>
-            </button>
-          ))}
+          {/* только один город, поэтому не нужен цикл */}
+          <button
+            onClick={() => handleWhatsApp(cityWhatsapp, cityName)}
+            className={`
+              flex-1
+              bg-gradient-to-r ${city.color} ${city.hoverColor}
+              text-white
+              px-3 py-2 text-xs font-medium rounded-lg
+              flex items-center justify-center gap-1
+              transition-all duration-200
+              active:scale-95
+              shadow-md hover:shadow-lg
+              border-0
+              min-h-[45px]
+              relative
+              group
+              sm:px-4 sm:py-3 sm:text-sm sm:rounded-xl
+            `}
+            style={{ 
+              touchAction: 'manipulation'
+            }}
+          >
+            <MessageCircle className="h-3 w-3 sm:h-4 sm:w-4" />
+            <span className="font-semibold">WhatsApp</span>
+            <span className="opacity-90">•</span>
+            <span className="opacity-90">{cityName}</span>
+          </button>
         </motion.div>
         
       </div>

@@ -9,9 +9,9 @@ import { MobileCallBar } from "@/components/MobileCallBar";
 import Script from "next/script";
 
 export const metadata = {
-  title: "Autocovers.kz — Авточехлы | Полики | Астана и Алматы",
+  title: "Autocovers.kz — Авточехлы | Полики | Астана",
   description:
-    "Индивидуальный пошив авточехлов и аксессуаров в Астане и Алматы. Рассрочка Kaspi Red. Подарочные сертификаты.",
+    "Индивидуальный пошив авточехлов и аксессуаров в Астане. Рассрочка Kaspi Red 24 месяца. Подарочные сертификаты.",
 };
 
 export default function RootLayout({

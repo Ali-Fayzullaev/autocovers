@@ -35,9 +35,9 @@ export function CityPicker({ action, children, className }: CityPickerProps) {
     }
   }, [isOpen]);
 
+  // Only Astana remains; list kept for potential future expansion
   const cities = [
     { id: "astana" as const, name: lang === "ru" ? "Астана" : "Астана" },
-    { id: "almaty" as const, name: lang === "ru" ? "Алматы" : "Алматы" },
   ];
 
   const currentCity = cities.find(city => city.id === selectedCity);

@@ -2,7 +2,8 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
-type City = "astana" | "almaty";
+// now only Astana remains
+type City = "astana";
 
 interface CityContextType {
   selectedCity: City;
@@ -17,13 +18,12 @@ export function CityProvider({ children }: { children: ReactNode }) {
   const [selectedCity, setSelectedCity] = useState<City>("astana");
 
   const getCityPhone = () => {
-    return selectedCity === "astana" ? "+77785228800" : "+77067088225";
+    // always Astana
+    return "+77785228800";
   };
 
   const getCityWhatsApp = () => {
-    return selectedCity === "astana" 
-      ? "https://wa.me/77785228800" 
-      : "https://wa.me/77067088225";
+    return "https://wa.me/77785228800";
   };
 
   return (

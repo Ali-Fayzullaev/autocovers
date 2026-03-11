@@ -7,39 +7,20 @@ import { kz } from "@/lib/translations/kz"
 import {
   ADDRESS_MSW,
   ADDRESS_INSTALL,
-  ADDRESS_ALMATY,
   HOURS,
   PHONES_ASTANA,
-  PHONES_ALMATY,
-  WHATSAPP_LINK,
   MAP_EMBED_GOOGLE,
-  MAP_EMBED_GOOGLE_ALMATY,
   MAP_URL_GOOGLE,
-  MAP_URL_GOOGLE_ALMATY,
   MAP_URL_2GIS,
-  MAP_URL_2GIS_ALMATY,
 } from "@/lib/config"
 import { Button } from "@/components/ui/button"
-import { useMemo, useState, useEffect } from "react"
-import { useCity } from "@/lib/CityContext"
+import { useMemo } from "react"
 import { motion } from "framer-motion"
 
 export function Contact() {
   const { lang } = useLanguage()
   const t = lang === "ru" ? ru : kz
-  const { selectedCity: globalSelectedCity, setSelectedCity: setGlobalSelectedCity } = useCity()
-  const [selectedCity, setSelectedCity] = useState<"astana" | "almaty">(globalSelectedCity)
-
-  // Синхронизируем локальное состояние с глобальным
-  useEffect(() => {
-    setSelectedCity(globalSelectedCity)
-  }, [globalSelectedCity])
-
-  // Обновляем глобальное состояние при локальном изменении
-  const handleCityChange = (city: "astana" | "almaty") => {
-    setSelectedCity(city)
-    setGlobalSelectedCity(city)
-  }
+  const selectedCity = "astana"
 
   const L = useMemo(
     () =>
@@ -54,7 +35,6 @@ export function Contact() {
             openIn2GIS: "Открыть в 2GIS",
             writeWhatsApp: "Написать в WhatsApp",
             astana: t.contacts?.astana ?? "Астана",
-            almaty: t.contacts?.almaty ?? "Алматы",
             selectCity: t.contacts?.selectCity ?? "Выберите город:",
           }
         : {
@@ -67,31 +47,19 @@ export function Contact() {
             openIn2GIS: "2GIS ашу",
             writeWhatsApp: "WhatsApp-қа жазу",
             astana: t.contacts?.astana ?? "Астана",
-            almaty: t.contacts?.almaty ?? "Алматы", 
             selectCity: t.contacts?.selectCity ?? "Қаланы таңдаңыз:",
           },
     [lang, t]
   )
 
-  // Данные в зависимости от выбранного города
   const cityData = useMemo(() => {
-    if (selectedCity === "almaty") {
-      return {
-        address: ADDRESS_ALMATY,
-        phones: PHONES_ALMATY,
-        mapEmbed: MAP_EMBED_GOOGLE_ALMATY,
-        mapGoogle: MAP_URL_GOOGLE_ALMATY,
-        map2Gis: MAP_URL_2GIS_ALMATY,
-      }
-    } else {
-      return {
-        address: ADDRESS_MSW,
-        installAddress: ADDRESS_INSTALL,
-        phones: PHONES_ASTANA,
-        mapEmbed: MAP_EMBED_GOOGLE,
-        mapGoogle: MAP_URL_GOOGLE,
-        map2Gis: MAP_URL_2GIS,
-      }
+    return {
+      address: ADDRESS_MSW,
+      installAddress: ADDRESS_INSTALL,
+      phones: PHONES_ASTANA,
+      mapEmbed: MAP_EMBED_GOOGLE,
+      mapGoogle: MAP_URL_GOOGLE,
+      map2Gis: MAP_URL_2GIS,
     }
   }, [selectedCity])
 
@@ -101,13 +69,13 @@ export function Contact() {
     name: "Autocovers.kz",
     address: {
       "@type": "PostalAddress",
-      addressLocality: selectedCity === "astana" ? "Астана" : "Алматы",
+      addressLocality: "Астана",
       streetAddress: cityData.address,
       addressCountry: "KZ",
     },
     telephone: cityData.phones.map((p) => p.tel),
     openingHours: "Mo-Su 10:00-20:00",
-    url: selectedCity === "astana" ? "https://wa.me/77785228800" : "https://wa.me/77067088225",
+    url: "https://wa.me/77785228800",
   }
 
   const cardVariants = {
@@ -138,38 +106,6 @@ export function Contact() {
       >
         {L.title}
       </motion.h2>
-
-      {/* Переключатель городов */}
-      <motion.div 
-        className="flex justify-center mb-8"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        viewport={{ once: true }}
-      >
-        <div className="inline-flex rounded-xl bg-white dark:bg-slate-800 p-1 border border-gray-200 dark:border-slate-700">
-          <button
-            onClick={() => handleCityChange("astana")}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-              selectedCity === "astana"
-                ? "bg-[var(--gold)] text-white shadow-md"
-                : "text-[var(--fg)] hover:bg-gray-100 dark:hover:bg-slate-700"
-            }`}
-          >
-            {L.astana}
-          </button>
-          <button
-            onClick={() => handleCityChange("almaty")}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-              selectedCity === "almaty"
-                ? "bg-[var(--gold)] text-white shadow-md"
-                : "text-[var(--fg)] hover:bg-gray-100 dark:hover:bg-slate-700"
-            }`}
-          >
-            {L.almaty}
-          </button>
-        </div>
-      </motion.div>
 
       <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
         {/* Левая колонка — карточки с адресом/часами/телефонами */}
@@ -262,19 +198,16 @@ export function Contact() {
                     </li>
                   ))}
                 </ul>
-
-                
               </div>
-              
             </div>
-                <div className="mt-6">
-                  <Button asChild className="w-full bg-gradient-to-r from-[var(--gold)] to-amber-500 hover:from-amber-600 hover:to-amber-600 text-white font-semibold py-3 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 transition-all duration-300">
-                    <a href={selectedCity === "astana" ? "https://wa.me/77785228800" : "https://wa.me/77067088225"} target="_blank" rel="noreferrer">
-                      <MessageCircle className="mr-2 h-5 w-5" />
-                      {L.writeWhatsApp}
-                    </a>
-                  </Button>
-                </div>
+            <div className="mt-6">
+              <Button asChild className="w-full bg-gradient-to-r from-[var(--gold)] to-amber-500 hover:from-amber-600 hover:to-amber-600 text-white font-semibold py-3 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 transition-all duration-300">
+                <a href="https://wa.me/77785228800" target="_blank" rel="noreferrer">
+                  <MessageCircle className="mr-2 h-5 w-5" />
+                  {L.writeWhatsApp}
+                </a>
+              </Button>
+            </div>
           </motion.div>
         </div>
 
@@ -293,7 +226,7 @@ export function Contact() {
               className="absolute inset-0 h-full w-full"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title={`${selectedCity === "astana" ? "Астана" : "Алматы"} — карта`}
+              title="Астана — карта"
             />
             <div className="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
               <p className="text-sm font-medium text-center text-[var(--fg)]">

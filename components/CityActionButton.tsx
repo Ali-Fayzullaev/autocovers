@@ -13,18 +13,13 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 
-// Константы с номерами
+// Константы с номерами (только Астана)
 const CITY_DATA = {
   astana: {
     name: { ru: "Астана", kz: "Астана" },
     phone: "+77785228800",
     whatsapp: "https://wa.me/77785228800"
   },
-  almaty: {
-    name: { ru: "Алматы", kz: "Алматы" },
-    phone: "+77067088225", 
-    whatsapp: "https://wa.me/77067088225"
-  }
 } as const;
 
 interface CityActionButtonProps {
@@ -34,7 +29,7 @@ interface CityActionButtonProps {
 }
 
 export function CityActionButton({ type, label, className }: CityActionButtonProps) {
-  const [selectedCity, setSelectedCity] = useState<"astana" | "almaty">("astana");
+  const [selectedCity, setSelectedCity] = useState<"astana">("astana");
   const [isOpen, setIsOpen] = useState(false);
   const { lang } = useLanguage();
 
@@ -47,7 +42,7 @@ export function CityActionButton({ type, label, className }: CityActionButtonPro
   const currentCityName = currentCity.name[lang as keyof typeof currentCity.name];
 
   const handleAction = (cityId: keyof typeof CITY_DATA) => {
-    setSelectedCity(cityId);
+    setSelectedCity(cityId as "astana");
     setIsOpen(false);
     
     const cityInfo = CITY_DATA[cityId];

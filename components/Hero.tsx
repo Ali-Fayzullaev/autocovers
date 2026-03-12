@@ -99,15 +99,19 @@ export default function Hero() {
           className="mt-8 flex flex-col sm:flex-row gap-2 justify-center items-stretch max-w-sm mx-auto"
         >
           {/* только один город, поэтому не нужен цикл */}
-          <button
-            onClick={() => handleWhatsApp(cityWhatsapp, cityName)}
+          {/* use anchor so area is fully clickable on mobile */}
+          <a
+            href={cityWhatsapp}
+            target="_blank"
+            rel="noreferrer"
             className={`
-              flex-1
+              flex-1 block w-full h-full cursor-pointer
               bg-gradient-to-r ${city.color} ${city.hoverColor}
               text-white
               px-3 py-2 text-xs font-medium rounded-lg
               flex items-center justify-center gap-1
               transition-all duration-200
+              hover:scale-105 hover:shadow-xl
               active:scale-95
               shadow-md hover:shadow-lg
               border-0
@@ -116,15 +120,13 @@ export default function Hero() {
               group
               sm:px-4 sm:py-3 sm:text-sm sm:rounded-xl
             `}
-            style={{ 
-              touchAction: 'manipulation'
-            }}
+            style={{ touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent' }}
           >
             <MessageCircle className="h-3 w-3 sm:h-4 sm:w-4" />
             <span className="font-semibold">WhatsApp</span>
             <span className="opacity-90">•</span>
             <span className="opacity-90">{cityName}</span>
-          </button>
+          </a>
         </motion.div>
         
       </div>

@@ -123,9 +123,9 @@ export default function Hero() {
             style={{ touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent' }}
           >
             <MessageCircle className="h-3 w-3 sm:h-4 sm:w-4" />
+
             <span className="font-semibold">WhatsApp</span>
-            <span className="opacity-90">•</span>
-            <span className="opacity-90">{cityName}</span>
+            
           </a>
         </motion.div>
         

@@ -35,4 +35,5 @@ export const KaspiRedLogo: React.FC<KaspiRedLogoProps> = ({
   );
 };
 
+
 export default KaspiRedLogo;

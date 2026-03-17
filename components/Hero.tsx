@@ -91,43 +91,41 @@ export default function Hero() {
           <KaspiRedLogo className="inline-block" />
         </motion.div>
 
-        {/* Альтернативный вариант - еще более компактный */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.35 }}
-          className="mt-8 flex flex-col sm:flex-row gap-2 justify-center items-stretch max-w-sm mx-auto"
-        >
-          {/* только один город, поэтому не нужен цикл */}
-          {/* use anchor so area is fully clickable on mobile */}
-          <a
-            href={cityWhatsapp}
-            target="_blank"
-            rel="noreferrer"
-            className={`
-              flex-1 block w-full h-full cursor-pointer
-              bg-gradient-to-r ${city.color} ${city.hoverColor}
-              text-white
-              px-3 py-2 text-xs font-medium rounded-lg
-              flex items-center justify-center gap-1
-              transition-all duration-200
-              hover:scale-105 hover:shadow-xl
-              active:scale-95
-              shadow-md hover:shadow-lg
-              border-0
-              min-h-[45px]
-              relative
-              group
-              sm:px-4 sm:py-3 sm:text-sm sm:rounded-xl
-            `}
-            style={{ touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent' }}
-          >
-            <MessageCircle className="h-3 w-3 sm:h-4 sm:w-4" />
-
-            <span className="font-semibold">WhatsApp</span>
-            
-          </a>
-        </motion.div>
+    {/* Простая кнопка с эффектами нажатия */}
+<div className="mt-8 flex flex-col sm:flex-row gap-2 justify-center items-stretch max-w-sm mx-auto">
+  <a
+    href={cityWhatsapp}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={`
+      flex-1 block w-full h-full cursor-pointer
+      bg-gradient-to-r ${city.color}
+      text-white
+      px-3 py-2 text-xs font-medium rounded-lg
+      flex items-center justify-center gap-1
+      transition-all duration-200
+      hover:scale-105 hover:shadow-xl
+      active:scale-95 active:brightness-90 active:saturate-150
+      shadow-md hover:shadow-lg
+      border-0
+      min-h-[45px]
+      relative
+      group
+      sm:px-4 sm:py-3 sm:text-sm sm:rounded-xl
+    `}
+    style={{ 
+      touchAction: 'manipulation', 
+      WebkitTapHighlightColor: 'transparent',
+      display: 'flex',
+      width: '100%',
+      textDecoration: 'none',
+      WebkitTouchCallout: 'none',
+    }}
+  >
+    <MessageCircle className="h-3 w-3 sm:h-4 sm:w-4" />
+    <span className="font-semibold">WhatsApp</span>
+  </a>
+</div>
         
       </div>
 

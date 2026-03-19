@@ -7,7 +7,6 @@ import { kz } from "@/lib/translations/kz"
 import {
   ADDRESS_MSW,
   ADDRESS_INSTALL,
-  HOURS,
   PHONES_ASTANA,
   MAP_EMBED_GOOGLE,
   MAP_URL_GOOGLE,
@@ -166,7 +165,6 @@ export function Contact() {
               </div>
               <div>
                 <h3 className="font-bold text-lg text-[var(--fg)] mb-2">{L.hoursTitle}</h3>
-                <p className="text-[var(--fg)] font-medium">{HOURS}</p>
               </div>
             </div>
           </motion.div>

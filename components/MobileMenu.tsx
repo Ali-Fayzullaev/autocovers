@@ -8,7 +8,7 @@ import { CityActionButton } from "@/components/CityActionButton"
 import { useLanguage } from "@/lib/LanguageContext"
 import { ru } from "@/lib/translations/ru"
 import { kz } from "@/lib/translations/kz"
-import { WHATSAPP_LINK, HOURS } from "@/lib/config"
+import { WHATSAPP_LINK } from "@/lib/config"
 
 export function MobileMenu() {
   const { lang } = useLanguage()
@@ -55,8 +55,7 @@ export function MobileMenu() {
           <ThemeToggle />
         </div>
         <div className="mt-auto text-sm muted">
-          <p>{HOURS}</p>
-          <p>MEGA Silk Way, паркинг, бутик 18</p>
+          <p>г. Астана, Проспект Мангилик Ел, 17</p>
         </div>
       </SheetContent>
     </Sheet>

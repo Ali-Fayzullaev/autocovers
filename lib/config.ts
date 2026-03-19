@@ -1,6 +1,5 @@
 // lib/config.ts
 export const WHATSAPP_LINK = "https://wa.me/77785228800"
-export const HOURS = "Ежедневно: 10:00–20:00"
 
 // Астана
 // основной адрес (Астана)

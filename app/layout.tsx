@@ -22,10 +22,10 @@ export default function RootLayout({
   return (
     <html lang="ru" suppressHydrationWarning>
       <head>
-        {/* Google Ads (gtag.js) */}
+        {/* ── Google Ads + GT (gtag.js) ── */}
         <Script
           id="gtag-src"
-          src="https://www.googletagmanager.com/gtag/js?id=AW-17463892692"
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18026639846"
           strategy="afterInteractive"
         />
         <Script id="gtag-init" strategy="afterInteractive">
@@ -33,11 +33,13 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){ dataLayer.push(arguments); }
             gtag('js', new Date());
+            gtag('config', 'AW-18026639846');
             gtag('config', 'AW-17463892692');
+            gtag('config', 'GT-TQS99RP7');
           `}
         </Script>
 
-        {/* Google Tag Manager */}
+        {/* ── Google Tag Manager ── */}
         <Script id="gtm-init" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -48,8 +50,8 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Yandex.Metrika */}
-        <Script id="ym-init" strategy="afterInteractive">
+        {/* ── Yandex.Metrika #1 (104212063) ── */}
+        <Script id="ym-init-1" strategy="afterInteractive">
           {`
             (function(m,e,t,r,i,k,a){
               m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -71,40 +73,59 @@ export default function RootLayout({
           `}
         </Script>
 
+        {/* ── Yandex.Metrika #2 (108158160) ── */}
+        <Script id="ym-init-2" strategy="afterInteractive">
+          {`
+            (function(m,e,t,r,i,k,a){
+              m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+              m[i].l=1*new Date();
+              for (var j = 0; j < document.scripts.length; j++) {
+                if (document.scripts[j].src === r) { return; }
+              }
+              k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+            })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=108158160', 'ym');
+
+            ym(108158160, 'init', {
+              ssr: true,
+              webvisor: true,
+              clickmap: true,
+              ecommerce: "dataLayer",
+              referrer: document.referrer,
+              url: location.href,
+              accurateTrackBounce: true,
+              trackLinks: true
+            });
+          `}
+        </Script>
+
+        {/* ── Google Ads Conversion helper ── */}
         <Script id="gtag-conversion-fn" strategy="afterInteractive">
           {`
           window.sendGtagConversion = function() {
             try {
               console.log('[gtag] sendGtagConversion called');
-
               if (typeof gtag === 'function') {
                 gtag('event', 'conversion', { 'send_to': 'AW-17463892692/1sfzCOawhJ4bENS1t4dB' });
-                console.log('[gtag] gtag() called for conversion');
+                gtag('event', 'conversion', { 'send_to': 'AW-18026639846' });
+                console.log('[gtag] conversion sent to both AW accounts');
               } else {
-                console.warn('[gtag] gtag is not defined yet, retrying in 500ms');
+                console.warn('[gtag] gtag not ready, retrying…');
                 setTimeout(function(){
                   if (typeof gtag === 'function') {
                     gtag('event', 'conversion', { 'send_to': 'AW-17463892692/1sfzCOawhJ4bENS1t4dB' });
-                    console.log('[gtag] gtag() called for conversion (retry)');
-                  } else {
-                    console.warn('[gtag] still not available — sending image fallback');
-                    // fallback: image pixel to googleadservices (may vary by region)
-                    var img = new Image();
-                    img.src = 'https://www.googleadservices.com/pagead/conversion/17463892692/?label=1sfzCOawhJ4bENS1t4dB&guid=ON&script=0';
-                    img.onload = function(){ console.log('[gtag] image fallback loaded'); };
-                    img.onerror = function(){ console.warn('[gtag] image fallback failed'); };
+                    gtag('event', 'conversion', { 'send_to': 'AW-18026639846' });
                   }
                 }, 500);
               }
             } catch (err) {
-              console.error('[gtag] sendGtagConversion error:', err);
+              console.error('[gtag] conversion error:', err);
             }
           };
         `}
         </Script>
       </head>
       <body>
-        {/* GTM (noscript) — строго сразу после <body> */}
+        {/* GTM (noscript) */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-KX9PLQ4N"
@@ -114,11 +135,22 @@ export default function RootLayout({
           />
         </noscript>
 
-        {/* Yandex.Metrika (noscript) */}
+        {/* Yandex.Metrika (noscript) #1 */}
         <noscript>
           <div>
             <img
               src="https://mc.yandex.ru/watch/104212063"
+              style={{ position: "absolute", left: "-9999px" }}
+              alt=""
+            />
+          </div>
+        </noscript>
+
+        {/* Yandex.Metrika (noscript) #2 */}
+        <noscript>
+          <div>
+            <img
+              src="https://mc.yandex.ru/watch/108158160"
               style={{ position: "absolute", left: "-9999px" }}
               alt=""
             />
